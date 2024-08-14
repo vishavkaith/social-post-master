@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Social Media Poster</title>
+</head>
+<body>
+  <h1>Post on Social Media</h1>
+  <form id="postForm">
+    <label for="message">Message:</label>
+    <input type="text" id="message" name="message" required>
+    <br>
+    <label for="imageUrl">Image URL:</label>
+    <input type="text" id="imageUrl" name="imageUrl">
+    <br>
+    <button type="submit">Post</button>
+  </form>
+  <script>
+    document.getElementById('postForm').addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const message = document.getElementById('message').value;
+      const imageUrl = document.getElementById('imageUrl').value;
+
+      try {
+        const response = await fetch('/post', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message, imageUrl })
+        });
+        const result = await response.json();
+        alert('Post successful');
+      } catch (error) {
+        console.error('Error posting:', error);
+        alert('Error posting');
+      }
+    });
+  </script>
+</body>
+</html>
